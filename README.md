@@ -1,2 +1,4 @@
 # notebook-desktop
-Desktop version of  https://github.com/HelloXiuXiu/notebook-web
+
+Desktop version of  [notebook-web](https://github.com/HelloXiuXiu/notebook-web).
+The app is built with [Socket Runtime](https://socketsupply.co/guides/)
