@@ -1,0 +1,24 @@
+{
+  "name": "c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ssc build -r -o --test=./test/index.js --headless",
+    "init-project": "ssc init",
+    "start": "ssc build -r -o",
+    "build": "ssc build -o"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.17.18"
+  },
+  "dependencies": {
+    "@socketsupply/components": "^14.0.2",
+    "@socketsupply/socket": "^0.2.13",
+    "@socketsupply/tonic": "^15.1.1"
+  },
+  "type": "module"
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="notebook">
+  <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+   <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        connect-src http://localhost:8080 ipc://* file://* socket:*;
+        child-src 'none';
+        img-src https: data: file:;
+      "
+    > 
+  <title>Notebook</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+  <header>
+    <div id="add" class="control"></div>
+    <div id="remove" class="control"></div>
+  </header>
+  <main>
+    <tonic-split id="split-main" type="vertical">
+      <tonic-split-left width="20%">
+        <section class="notes">
+          <ul class="notes_wrapper">
+            <li class="note active">
+              <time class="note_time" datetime="2023-04-20">20.04.2023</time>
+              <p class="note_body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsu</p>
+            </li>
+            <li class="note">
+              <time class="note_time" datetime="2023-04-20">20.04.2023</time>
+                <p class="note_body">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsu</p>
+              </li>
+            <li class="note">
+              <time class="note_time" datetime="2023-04-20">20.04.2023</time>
+              <p class="note_body">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
+              </li>
+            <li class="note">
+              <time class="note_time" datetime="2023-04-20">20.04.2023</time>
+              <p class="note_body">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+            </li>
+            <li class="note">
+              <time class="note_time" datetime="2023-04-20">20.04.2023</time>
+              <p class="note_body">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsu</p>
+            </li>
+            <li class="note">
+              <time class="note_time" datetime="2023-04-20">20.04.2023</time>
+              <p class="note_body">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+            </li>
+            <li class="note">
+              <time class="note_time" datetime="2023-04-20">20.04.2023</time>
+              <p class="note_body">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsu</p>
+            </li>
+          </ul>
+          <template id="note_template">
+            <li class="note">
+              <time class="note_time" datetime=""></time>
+              <p class="note_body"></p>
+            </li>
+          </template>        
+        </section>
+    </tonic-split-left>
+    <tonic-split-right width="80%">
+      <section class="note_field">
+        <p class="note_body_full" contenteditable="true"></p>
+      </section>
+    </tonic-split-right>
+    </tonic-split>
+  </main>
+  <script type="module" src="index.js" ></script>
+  <script type="text/javascript" src="notebook.js"></script>
+</body>
+</html>
