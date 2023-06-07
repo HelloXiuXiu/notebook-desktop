@@ -12,12 +12,14 @@
  *
  */
 import { createPeer, Encryption, sha256 } from './stream-relay/index.js'
-import { sodium, randomBytes } from 'socket:crypto'
-import { EventEmitter } from 'socket:events'
+import { sodium, randomBytes } from './crypto.js'
+import { EventEmitter } from './events.js'
+import { isBufferLike } from './util.js'
 
 import dgram from './dgram.js'
 
 const PeerFactory = createPeer(dgram)
+const textDecoder = new TextDecoder()
 
 /**
  *
@@ -59,10 +61,6 @@ export class Peer extends EventEmitter {
    */
   constructor (opts = {}) {
     super(opts)
-
-    if (!opts.publicKey) {
-      throw new Error('Constructor requires .publicKey option property')
-    }
 
     if (!opts.clusterId) {
       throw new Error('A clusterId must be specified (string)')
@@ -132,19 +130,61 @@ export class Peer extends EventEmitter {
   async join () {
     if (this.peer) return this.peer
 
-    this.opts.clusterId = await sha256(this.opts.custerId)
+    this.opts.clusterId = await sha256(this.opts.clusterId)
     this.opts.peerId = this.opts.peerId || (await sha256(randomBytes(32))).toString('hex')
 
     this.peer = await PeerFactory.create({ ...this.opts })
 
     this.peer.onPacket = (packet, port, address, data) => {
-      this._emit(packet.usr1, packet.message, address, port)
+      const event = packet.usr1
+      let message = packet.message
+
+      if (!event || typeof event !== 'string') return
+
+      if (isBufferLike(message)) {
+        try {
+          message = textDecoder.decode(message)
+        } catch (err) {}
+      }
+
+      if (typeof message === 'string') {
+        try {
+          message = JSON.parse(message)
+        } catch (err) {
+          this.emit('error', err)
+          return
+        }
+      }
+
+      this._emit(event, message, address, port, data)
     }
 
-    this.peer.encryption.add(this.opts.publicKey, this.opts.privateKey)
+    this.#peerSubscribe('onData', 'data')
+    this.#peerSubscribe('onClusterData', 'cluster-data')
+    this.#peerSubscribe('onClose', 'close')
+
+    if (this.opts.publicKey && this.opts.privateKey) {
+      this.peer.encryption.add(this.opts.publicKey, this.opts.privateKey)
+    }
 
     await this.peer.init()
     return this.peer
+  }
+
+  getPeerId () {
+    return this.peer?.peerId
+  }
+
+  close () {
+    if (this.peer) this.peer.close()
+  }
+
+  #peerSubscribe (handlerName, eventName) {
+    const oldHandler = this.peer[handlerName]
+    this.peer[handlerName] = (...args) => {
+      this._emit(eventName, ...args)
+      if (oldHandler) oldHandler.call(this.peer, ...args)
+    }
   }
 }
 

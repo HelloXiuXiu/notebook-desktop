@@ -8,5 +8,5 @@ The app is built with [Socket Runtime](https://socketsupply.co/guides/).
 <br>
 To run the app:
 ```sh
-npm start
+ssc build -r
 ```

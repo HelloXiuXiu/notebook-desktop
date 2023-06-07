@@ -16,6 +16,7 @@
     "esbuild": "^0.17.18"
   },
   "dependencies": {
+    "@esbuild/darwin-arm64": "^0.17.19",
     "@socketsupply/components": "^14.0.2",
     "@socketsupply/socket": "^0.2.13",
     "@socketsupply/tonic": "^15.1.1"

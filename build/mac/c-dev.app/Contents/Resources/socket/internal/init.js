@@ -1,4 +1,4 @@
-/* global CustomEvent, ErrorEvent, Blob */
+/* global Blob */
 /* eslint-disable import/first */
 // mark when runtime did init
 console.assert(
@@ -12,8 +12,10 @@ console.assert(
   'This could lead to undefined behavior.'
 )
 
-globalThis.__RUNTIME_INIT_NOW__ = performance.now()
+import { IllegalConstructor, InvertedPromise } from '../util.js'
+import { Event, CustomEvent, ErrorEvent } from '../events.js'
 
+const RUNTIME_INIT_EVENT_NAME = '__runtime_init__'
 const GlobalWorker = globalThis.Worker || class Worker extends EventTarget {}
 
 // only patch a webview or worker context
@@ -193,7 +195,6 @@ if (typeof globalThis.XMLHttpRequest === 'function') {
   }
 }
 
-import { IllegalConstructor, InvertedPromise } from '../util.js'
 import { applyPolyfills } from '../polyfills.js'
 import { config } from '../application.js'
 import globals from './globals.js'
@@ -215,15 +216,19 @@ class ConcurrentQueue extends EventTarget {
     }
 
     this.addEventListener('error', (event) => {
-      // @ts-ignore
-      const { error, type } = event
-      globalThis.dispatchEvent?.(new ErrorEvent(type, { error }))
+      if (event.defaultPrevented !== true) {
+        // @ts-ignore
+        const { error, type } = event
+        globalThis.dispatchEvent?.(new ErrorEvent(type, { error }))
+      }
     })
   }
 
   async wait () {
     if (this.pending.length < this.concurrency) return
-    await this.peek()
+    const offset = (this.pending.length - this.concurrency) + 1
+    const pending = this.pending.slice(0, offset)
+    await Promise.all(pending)
   }
 
   peek () {
@@ -234,12 +239,10 @@ class ConcurrentQueue extends EventTarget {
     let timeout = null
     const onresolve = () => {
       clearTimeout(timeout)
-      queueMicrotask(() => {
-        const index = this.pending.indexOf(request)
-        if (index > -1) {
-          this.pending.splice(index, 1)
-        }
-      })
+      const index = this.pending.indexOf(request)
+      if (index > -1) {
+        this.pending.splice(index, 1)
+      }
     }
 
     timeout = setTimeout(onresolve, timer || 32)
@@ -266,24 +269,22 @@ class RuntimeXHRPostQueue extends ConcurrentQueue {
     const options = { responseType: 'arraybuffer' }
     const result = await ipc.request('post', { id }, options)
 
-    if (result.err) {
-      promise.resolve()
-      this.dispatchEvent(new CustomEvent('error', { detail: result.err }))
-      return
-    }
+    promise.resolve()
 
-    Promise.resolve().then(() => {
+    if (result.err) {
+      this.dispatchEvent(new ErrorEvent('error', { error: result.err }))
+    } else {
       const { data } = result
       const detail = { headers, params, data, id }
-      promise.resolve()
       globalThis.dispatchEvent(new CustomEvent('data', { detail }))
-    })
+    }
   }
 }
 
 hooks.onLoad(() => {
   if (typeof globalThis.dispatchEvent === 'function') {
-    globalThis.dispatchEvent(new CustomEvent('init'))
+    globalThis.__RUNTIME_INIT_NOW__ = performance.now()
+    globalThis.dispatchEvent(new Event(RUNTIME_INIT_EVENT_NAME))
   }
 })
 
@@ -307,4 +308,5 @@ hooks.onReady(async () => {
 globals.register('RuntimeXHRPostQueue', new RuntimeXHRPostQueue())
 // prevent further construction if this class is indirectly referenced
 RuntimeXHRPostQueue.prototype.constructor = IllegalConstructor
+
 export default applyPolyfills()

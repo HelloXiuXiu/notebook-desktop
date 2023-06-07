@@ -320,7 +320,7 @@ Start advertising a new value for a well-known UUID
 | Not specified | Promise<void> |  |
 
 
-# [Crypto](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L13)
+# [Crypto](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L14)
 
 
  Some high-level methods around the `crypto.subtle` API for getting
@@ -331,15 +331,15 @@ Start advertising a new value for a well-known UUID
  import { randomBytes } from 'socket:crypto'
  ```
 
-## [ready](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L48)
-
-A promise that resolves when all internals to be loaded/ready.
-
-## [webcrypto](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L61)
+## [webcrypto](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L23)
 
 WebCrypto API
 
-## [`getRandomValues(buffer)`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L69)
+## [ready](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L52)
+
+A promise that resolves when all internals to be loaded/ready.
+
+## [`getRandomValues(buffer)`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L67)
 
 External docs: https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues
 
@@ -355,24 +355,24 @@ Generate cryptographically strong random values into the `buffer`
 | Not specified | TypedArray |  |
 
 
-## [`rand64()`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L90)
+## [`rand64()`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L86)
 
 This is a `FunctionDeclaration` named `rand64` in `api/crypto.js`, it's exported but undocumented.
 
 
-## [RANDOM_BYTES_QUOTA](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L98)
+## [RANDOM_BYTES_QUOTA](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L94)
 
 Maximum total size of random bytes per page
 
-## [MAX_RANDOM_BYTES](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L103)
+## [MAX_RANDOM_BYTES](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L99)
 
 Maximum total size for random bytes.
 
-## [MAX_RANDOM_BYTES_PAGES](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L108)
+## [MAX_RANDOM_BYTES_PAGES](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L104)
 
 Maximum total amount of allocated per page of bytes (max/quota)
 
-## [`randomBytes(size)`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L116)
+## [`randomBytes(size)`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L112)
 
 Generate `size` random bytes.
 
@@ -386,7 +386,7 @@ Generate `size` random bytes.
 | Not specified | Buffer | A promise that resolves with an instance of socket.Buffer with random bytes. |
 
 
-## [`createDigest(algorithm, message)`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L143)
+## [`createDigest(algorithm, message)`](https://github.com/socketsupply/socket/blob/master/api/crypto.js#L139)
 
 
 
@@ -1191,26 +1191,26 @@ External docs: https://nodejs.org/dist/latest-v16.x/docs/api/fs.html#fspromisesw
  import { send } from 'socket:ipc'
  ```
 
-## [`emit(name, value, target , options)`](https://github.com/socketsupply/socket/blob/master/api/ipc.js#L1026)
+## [`emit(name, value, target , options)`](https://github.com/socketsupply/socket/blob/master/api/ipc.js#L1027)
 
 Emit event to be dispatched on `window` object.
 
 | Argument | Type | Default | Optional | Description |
 | :---     | :--- | :---:   | :---:    | :---        |
 | name | string |  | false |  |
-| value | Mixed |  | false |  |
+| value | any |  | false |  |
 | target | EventTarget | window | true |  |
 | options | Object |  | true |  |
 
 
-## [`send(command, value, options)`](https://github.com/socketsupply/socket/blob/master/api/ipc.js#L1085)
+## [`send(command, value, options)`](https://github.com/socketsupply/socket/blob/master/api/ipc.js#L1086)
 
 Sends an async IPC command request with parameters.
 
 | Argument | Type | Default | Optional | Description |
 | :---     | :--- | :---:   | :---:    | :---        |
 | command | string |  | false |  |
-| value | Mixed |  | true |  |
+| value | any |  | true |  |
 | options | object |  | true |  |
 | options.cache | boolean | false | true |  |
 | options.bytes | boolean | false | true |  |
@@ -1310,7 +1310,7 @@ External docs: https://socketsupply.co/guides/#p2p-guide
  ```
 
 
-## [`Peer` (extends `EventEmitter`)](https://github.com/socketsupply/socket/blob/master/api/peer.js#L50)
+## [`Peer` (extends `EventEmitter`)](https://github.com/socketsupply/socket/blob/master/api/peer.js#L52)
 
 
 The Peer class is an EventEmitter. It emits events when new network events
@@ -1334,7 +1334,7 @@ window.onload = () => {
 }
 ```
 
-### [`constructor(options)`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L60)
+### [`constructor(options)`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L62)
 
 `Peer` class constructor.
 
@@ -1348,7 +1348,7 @@ window.onload = () => {
 | options.peers | Array |  | false | An array of RemotePeer |
 
 
-### [`createKeys()`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L84)
+### [`createKeys()`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L82)
 
 A method that will generate a public and private key pair.
  The ed25519 pair can be stored by an app with a secure API.
@@ -1359,7 +1359,7 @@ A method that will generate a public and private key pair.
 | pair | Object<Pair> | A pair of keys |
 
 
-### [`createClusterId()`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L98)
+### [`createClusterId()`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L96)
 
 Create a clusterId from random bytes
 
@@ -1368,7 +1368,7 @@ Create a clusterId from random bytes
 | id | string | a hex encoded sha256 hash |
 
 
-### [`emit(event, message)`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L109)
+### [`emit(event, message)`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L107)
 
 Emits a message to the network
 
@@ -1384,7 +1384,7 @@ Emits a message to the network
 | Not specified | Object<Packet> | The packet that will be sent when possible |
 
 
-### [`join()`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L132)
+### [`join()`](https://github.com/socketsupply/socket/blob/master/api/peer.js#L130)
 
 Starts the process of connecting to the network.
 
@@ -1402,11 +1402,11 @@ Starts the process of connecting to the network.
  import { Path } from 'socket:path'
  ```
 
-## [`Path` (extends `URL`)](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L29)
+## [`Path` (extends `URL`)](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L32)
 
 A container for a parsed Path.
 
-### [`cwd(opts)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L36)
+### [`cwd(opts)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L39)
 
 Computes current working directory for a path
 
@@ -1421,7 +1421,7 @@ Computes current working directory for a path
 | Not specified | string |  |
 
 
-### [`resolve(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L55)
+### [`resolve(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L58)
 
 Resolves path components to an absolute path.
 
@@ -1436,7 +1436,7 @@ Resolves path components to an absolute path.
 | Not specified | string |  |
 
 
-### [`relative(options, from, to)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L80)
+### [`relative(options, from, to)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L86)
 
 Computes the relative path from `from` to `to`.
 
@@ -1452,7 +1452,7 @@ Computes the relative path from `from` to `to`.
 | Not specified | string |  |
 
 
-### [`join(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L123)
+### [`join(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L133)
 
 Joins path components. This function may not return an absolute path.
 
@@ -1467,7 +1467,7 @@ Joins path components. This function may not return an absolute path.
 | Not specified | string |  |
 
 
-### [`dirname(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L145)
+### [`dirname(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L163)
 
 Computes directory name of path.
 
@@ -1482,7 +1482,7 @@ Computes directory name of path.
 | Not specified | string |  |
 
 
-### [`basename(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L175)
+### [`basename(options, components)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L235)
 
 Computes base name of path.
 
@@ -1497,7 +1497,7 @@ Computes base name of path.
 | Not specified | string |  |
 
 
-### [`extname(options, path)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L193)
+### [`extname(options, path)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L250)
 
 Computes extension name of path.
 
@@ -1512,7 +1512,7 @@ Computes extension name of path.
 | Not specified | string |  |
 
 
-### [`normalize(options, path)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L204)
+### [`normalize(options, path)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L261)
 
 Computes normalized path
 
@@ -1527,12 +1527,13 @@ Computes normalized path
 | Not specified | string |  |
 
 
-### [`format(path)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L248)
+### [`format(options, path)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L311)
 
 Formats `Path` object into a string.
 
 | Argument | Type | Default | Optional | Description |
 | :---     | :--- | :---:   | :---:    | :---        |
+| options | object |  | false |  |
 | path | object \| Path |  | false |  |
 
 
@@ -1541,7 +1542,21 @@ Formats `Path` object into a string.
 | Not specified | string |  |
 
 
-### [`from(input, cwd)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L264)
+### [`parse(path)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L327)
+
+Parses input `path` into a `Path` instance.
+
+| Argument | Type | Default | Optional | Description |
+| :---     | :--- | :---:   | :---:    | :---        |
+| path | PathComponent |  | false |  |
+
+
+| Return Value | Type | Description |
+| :---         | :--- | :---        |
+| Not specified | object |  |
+
+
+### [`from(input, cwd)`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L353)
 
 Creates a `Path` instance from `input` and optional `cwd`.
 
@@ -1551,7 +1566,7 @@ Creates a `Path` instance from `input` and optional `cwd`.
 | cwd | string |  | false |  |
 
 
-### [`constructor(pathname, cwd )`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L285)
+### [`constructor(pathname, cwd )`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L374)
 
 `Path` class constructor.
 
@@ -1561,47 +1576,47 @@ Creates a `Path` instance from `input` and optional `cwd`.
 | cwd | string | Path.cwd() | false |  |
 
 
-### [`isRelative()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L316)
+### [`isRelative()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L407)
 
 `true` if the path is relative, otherwise `false.
 
-### [`value()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L323)
+### [`value()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L414)
 
 The working value of this path.
 
-### [`source()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L331)
+### [`source()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L425)
 
 The original source, unresolved.
 
-### [`parent()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L339)
+### [`parent()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L433)
 
 Computed parent path.
 
-### [`root()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L351)
+### [`root()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L451)
 
 Computed root in path.
 
-### [`dir()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L372)
+### [`dir()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L472)
 
 Computed directory name in path.
 
-### [`base()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L410)
+### [`base()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L507)
 
 Computed base name in path.
 
-### [`name()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L422)
+### [`name()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L519)
 
 Computed base name in path without path extension.
 
-### [`ext()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L430)
+### [`ext()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L527)
 
 Computed extension name in path.
 
-### [`drive()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L448)
+### [`drive()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L545)
 
 The computed drive, if given in the path.
 
-### [`toURL()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L455)
+### [`toURL()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L552)
 
 
 
@@ -1610,7 +1625,7 @@ The computed drive, if given in the path.
 | Not specified | URL |  |
 
 
-### [`toString()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L463)
+### [`toString()`](https://github.com/socketsupply/socket/blob/master/api/path/path.js#L560)
 
 Converts this `Path` instance to a string.
 
@@ -1683,7 +1698,7 @@ External docs: module:Application Application
 
  Represents a window in the application
 
-### [`index()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L57)
+### [`index()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L56)
 
 Get the index of the window
 
@@ -1692,7 +1707,7 @@ Get the index of the window
 | Not specified | number | the index of the window |
 
 
-### [`getSize()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L65)
+### [`getSize()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L64)
 
 Get the size of the window
 
@@ -1701,7 +1716,7 @@ Get the size of the window
 | Not specified | { width: number, height: number  | } - the size of the window |
 
 
-### [`getTitle()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L76)
+### [`getTitle()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L75)
 
 Get the title of the window
 
@@ -1710,7 +1725,7 @@ Get the title of the window
 | Not specified | string | the title of the window |
 
 
-### [`getStatus()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L84)
+### [`getStatus()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L83)
 
 Get the status of the window
 
@@ -1719,7 +1734,7 @@ Get the status of the window
 | Not specified | string | the status of the window |
 
 
-### [`close()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L92)
+### [`close()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L91)
 
 Close the window
 
@@ -1728,7 +1743,7 @@ Close the window
 | Not specified | Promise<object> | the options of the window |
 
 
-### [`show()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L107)
+### [`show()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L106)
 
 Shows the window
 
@@ -1737,7 +1752,7 @@ Shows the window
 | Not specified | Promise<ipc.Result> |  |
 
 
-### [`hide()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L116)
+### [`hide()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L115)
 
 Hides the window
 
@@ -1746,7 +1761,7 @@ Hides the window
 | Not specified | Promise<ipc.Result> |  |
 
 
-### [`setTitle(title)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L126)
+### [`setTitle(title)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L125)
 
 Sets the title of the window
 
@@ -1760,7 +1775,7 @@ Sets the title of the window
 | Not specified | Promise<ipc.Result> |  |
 
 
-### [`setSize(opts)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L139)
+### [`setSize(opts)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L138)
 
 Sets the size of the window
 
@@ -1776,7 +1791,7 @@ Sets the size of the window
 | Not specified | Promise<ipc.Result> |  |
 
 
-### [`navigate(path)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L179)
+### [`navigate(path)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L178)
 
 Navigate the window to a given path
 
@@ -1790,7 +1805,7 @@ Navigate the window to a given path
 | Not specified | Promise<ipc.Result> |  |
 
 
-### [`showInspector()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L188)
+### [`showInspector()`](https://github.com/socketsupply/socket/blob/master/api/window.js#L187)
 
 Opens the Web Inspector for the window
 
@@ -1799,7 +1814,7 @@ Opens the Web Inspector for the window
 | Not specified | Promise<object> |  |
 
 
-### [`setBackgroundColor(opts)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L205)
+### [`setBackgroundColor(opts)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L204)
 
 Sets the background color of the window
 
@@ -1817,7 +1832,7 @@ Sets the background color of the window
 | Not specified | Promise<object> |  |
 
 
-### [`setContextMenu(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L215)
+### [`setContextMenu(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L214)
 
 Opens a native context menu.
 
@@ -1831,7 +1846,7 @@ Opens a native context menu.
 | Not specified | Promise<object> |  |
 
 
-### [`showOpenFilePicker(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L232)
+### [`showOpenFilePicker(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L231)
 
 Shows a native open file dialog.
 
@@ -1845,7 +1860,7 @@ Shows a native open file dialog.
 | Not specified | Promise<string[]> | an array of file paths |
 
 
-### [`showSaveFilePicker(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L243)
+### [`showSaveFilePicker(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L242)
 
 Shows a native save file dialog.
 
@@ -1859,7 +1874,7 @@ Shows a native save file dialog.
 | Not specified | Promise<string[]> | an array of file paths |
 
 
-### [`showDirectoryFilePicker(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L254)
+### [`showDirectoryFilePicker(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L253)
 
 Shows a native directory dialog.
 
@@ -1873,7 +1888,7 @@ Shows a native directory dialog.
 | Not specified | Promise<string[]> | an array of file paths |
 
 
-### [`send(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L269)
+### [`send(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L268)
 
 Sends an IPC message to the window or to qthe backend.
 
@@ -1886,7 +1901,7 @@ Sends an IPC message to the window or to qthe backend.
 | options.value | string \| object |  | true | the value to send |
 
 
-### [`openExternal(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L306)
+### [`openExternal(options)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L305)
 
 Opens an URL in the default browser.
 
@@ -1900,7 +1915,7 @@ Opens an URL in the default browser.
 | Not specified | Promise<ipc.Result> |  |
 
 
-### [`addListener(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L317)
+### [`addListener(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L316)
 
 Adds a listener to the window.
 
@@ -1910,7 +1925,7 @@ Adds a listener to the window.
 | cb | function(*): void |  | false | the callback to call |
 
 
-### [`on(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L335)
+### [`on(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L334)
 
 Adds a listener to the window. An alias for `addListener`.
 
@@ -1920,7 +1935,7 @@ Adds a listener to the window. An alias for `addListener`.
 | cb | function(*): void |  | false | the callback to call |
 
 
-### [`once(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L352)
+### [`once(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L351)
 
 Adds a listener to the window. The listener is removed after the first call.
 
@@ -1930,7 +1945,7 @@ Adds a listener to the window. The listener is removed after the first call.
 | cb | function(*): void |  | false | the callback to call |
 
 
-### [`removeListener(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L368)
+### [`removeListener(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L367)
 
 Removes a listener from the window.
 
@@ -1940,7 +1955,7 @@ Removes a listener from the window.
 | cb | function(*): void |  | false | the callback to remove |
 
 
-### [`removeAllListeners(event)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L381)
+### [`removeAllListeners(event)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L380)
 
 Removes all listeners from the window.
 
@@ -1949,7 +1964,7 @@ Removes all listeners from the window.
 | event | string |  | false | the event to remove the listeners from |
 
 
-### [`off(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L397)
+### [`off(event, cb)`](https://github.com/socketsupply/socket/blob/master/api/window.js#L396)
 
 Removes a listener from the window. An alias for `removeListener`.
 
@@ -1959,7 +1974,7 @@ Removes a listener from the window. An alias for `removeListener`.
 | cb | function(*): void |  | false | the callback to remove |
 
 
-## [constants](https://github.com/socketsupply/socket/blob/master/api/window.js#L407)
+## [constants](https://github.com/socketsupply/socket/blob/master/api/window.js#L406)
 
 This is a `VariableDeclaration` named `constants` in `api/window.js`, it's exported but undocumented.
 

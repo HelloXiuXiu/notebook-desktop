@@ -105,7 +105,7 @@ export function toString (object) {
   return Object.prototype.toString(object)
 }
 
-export function toBuffer (object, encoding) {
+export function toBuffer (object, encoding = undefined) {
   if (Buffer.isBuffer(object)) {
     return object
   } else if (isTypedArray(object)) {
@@ -400,7 +400,9 @@ export function inspect (value, options) {
     }
 
     if (value instanceof Date) {
-      typename = `${Date.prototype.toUTCString.call(value)}`
+      typename = `${Date.prototype.toString.call(value)}`
+      braces[0] = '['
+      braces[1] = ']'
     }
 
     if (value instanceof Error) {
@@ -520,8 +522,6 @@ export function inspect (value, options) {
           []
         )
 
-        output.push('    at')
-
         if (symbol) {
           output.push(symbol)
         }
@@ -541,6 +541,9 @@ export function inspect (value, options) {
           output.push(`${context}`)
         }
 
+        if (output.length) {
+          output.unshift('    at')
+        }
         return output.filter(Boolean).join(' ')
       }
 
@@ -550,6 +553,7 @@ export function inspect (value, options) {
           ? line
           : formatWebkitErrorStackLine(line)
         )
+        .filter(Boolean)
         .join('\n')
 
       if (keys.size) {

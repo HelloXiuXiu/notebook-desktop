@@ -283,7 +283,7 @@ declare module "socket:errors" {
         get name(): string;
         get code(): string;
     }
-    import * as exports from "errors";
+    import * as exports from "socket:errors";
     
 }
 declare module "socket:buffer" {
@@ -451,7 +451,7 @@ declare module "socket:util" {
     export function isClass(value: any): boolean;
     export function isPromiseLike(object: any): boolean;
     export function toString(object: any): string;
-    export function toBuffer(object: any, encoding: any): any;
+    export function toBuffer(object: any, encoding?: any): any;
     export function toProperCase(string: any): any;
     export function splitBuffer(buffer: any, highWaterMark: any): any[];
     export function InvertedPromise(): Promise<any>;
@@ -471,14 +471,33 @@ declare module "socket:util" {
     export class IllegalConstructor {
     }
     export default exports;
-    import * as exports from "util";
+    import * as exports from "socket:util";
     
 }
 declare module "socket:console" {
-    export function patchGlobalConsole(globalConsole: any, options: any): any;
+    export function patchGlobalConsole(globalConsole: any, options?: {}): any;
     export const globalConsole: globalThis.Console;
     export class Console {
+        /**
+         * @ignore
+         */
         constructor(options: any);
+        /**
+         * @type {import('dom').Console}
+         */
+        console: any;
+        /**
+         * @type {Map}
+         */
+        timers: Map<any, any>;
+        /**
+         * @type {Map}
+         */
+        counters: Map<any, any>;
+        /**
+         * @type {function?}
+         */
+        postMessage: Function | null;
         write(destination: any, ...args: any[]): Promise<any>;
         assert(assertion: any, ...args: any[]): void;
         clear(): void;
@@ -543,37 +562,37 @@ declare module "socket:ipc" {
     /**
      * Emit event to be dispatched on `window` object.
      * @param {string} name
-     * @param {Mixed} value
+     * @param {any} value
      * @param {EventTarget=} [target = window]
      * @param {Object=} options
      */
-    export function emit(name: string, value: Mixed, target?: EventTarget | undefined, options?: any | undefined): Promise<void>;
+    export function emit(name: string, value: any, target?: EventTarget | undefined, options?: any | undefined): Promise<void>;
     /**
      * Resolves a request by `seq` with possible value.
      * @param {string} seq
-     * @param {Mixed} value
+     * @param {any} value
      * @ignore
      */
-    export function resolve(seq: string, value: Mixed): Promise<void>;
+    export function resolve(seq: string, value: any): Promise<void>;
     /**
      * Sends an async IPC command request with parameters.
      * @param {string} command
-     * @param {Mixed=} value
+     * @param {any=} value
      * @param {object=} [options]
      * @param {boolean=} [options.cache=false]
      * @param {boolean=} [options.bytes=false]
      * @return {Promise<Result>}
      */
-    export function send(command: string, value?: Mixed, options?: object | undefined): Promise<Result>;
+    export function send(command: string, value?: any | undefined, options?: object | undefined): Promise<Result>;
     /**
      * Sends an async IPC command request with parameters and buffered bytes.
      * @param {string} command
      * @param {object=} params
-     * @param {(Buffer|TypeArray|ArrayBuffer|string|Array)=} buffer
+     * @param {(Buffer|Uint8Array|ArrayBuffer|string|Array)=} buffer
      * @param {object=} options
      * @ignore
      */
-    export function write(command: string, params?: object | undefined, buffer?: (Buffer | TypeArray | ArrayBuffer | string | any[]) | undefined, options?: object | undefined): Promise<any>;
+    export function write(command: string, params?: object | undefined, buffer?: (Buffer | Uint8Array | ArrayBuffer | string | any[]) | undefined, options?: object | undefined): Promise<any>;
     /**
      * Sends an async IPC command request with parameters requesting a response
      * with buffered bytes.
@@ -724,25 +743,25 @@ declare module "socket:ipc" {
         };
         /**
          * Returns computed parameters as entries
-         * @return {Array<Array<string,mixed>>}
+         * @return {Array<Array<any>>}
          * @ignore
          */
-        entries(): Array<Array<string, mixed>>;
+        entries(): Array<Array<any>>;
         /**
          * Set a parameter `value` by `key`.
          * @param {string} key
-         * @param {mixed} value
+         * @param {any} value
          * @ignore
          */
-        set(key: string, value: mixed): void;
+        set(key: string, value: any): void;
         /**
          * Get a parameter value by `key`.
          * @param {string} key
-         * @param {mixed} defaultValue
-         * @return {mixed}
+         * @param {any} defaultValue
+         * @return {any}
          * @ignore
          */
-        get(key: string, defaultValue: mixed): mixed;
+        get(key: string, defaultValue: any): any;
         /**
          * Delete a parameter by `key`.
          * @param {string} key
@@ -758,10 +777,10 @@ declare module "socket:ipc" {
         keys(): Array<string>;
         /**
          * Computed parameter values.
-         * @return {Array<mixed>}
+         * @return {Array<any>}
          * @ignore
          */
-        values(): Array<mixed>;
+        values(): Array<any>;
         /**
          * Predicate to determine if parameter `key` is present in parameters.
          * @param {string} key
@@ -781,14 +800,14 @@ declare module "socket:ipc" {
         /**
          * Creates a `Result` instance from input that may be an object
          * like `{ err?, data? }`, an `Error` instance, or just `data`.
-         * @param {object|Error|mixed?} result
+         * @param {object|Error|any?} result
          * @param {Error|object} [maybeError]
          * @param {string} [maybeSource]
          * @param {object|string|Headers} [maybeHeaders]
          * @return {Result}
          * @ignore
          */
-        static from(result: object | Error | (mixed | null), maybeError?: Error | object, maybeSource?: string, maybeHeaders?: object | string | Headers): Result;
+        static from(result: object | Error | (any | null), maybeError?: Error | object, maybeSource?: string, maybeHeaders?: object | string | Headers): Result;
         /**
          * `Result` class constructor.
          * @private
@@ -851,14 +870,14 @@ declare module "socket:ipc" {
      */
     export const primordials: any;
     export default exports;
-    import { Buffer } from "buffer";
-    import * as exports from "ipc";
+    import { Buffer } from "socket:buffer";
+    import * as exports from "socket:ipc";
     
 }
 declare module "socket:polyfills" {
     export function applyPolyfills(): void;
     export default exports;
-    import * as exports from "polyfills";
+    import * as exports from "socket:polyfills";
     
 }
 declare module "socket:window/constants" {
@@ -876,7 +895,7 @@ declare module "socket:window/constants" {
     export const WINDOW_EXITED: 51;
     export const WINDOW_KILLING: 60;
     export const WINDOW_KILLED: 61;
-    export * as _default from "window/constants";
+    export * as _default from "socket:window/constants";
     
 }
 declare module "socket:window" {
@@ -899,9 +918,8 @@ declare module "socket:window" {
         /**
          * Get the index of the window
          * @return {number} - the index of the window
-         * @readonly
          */
-        readonly get index(): number;
+        get index(): number;
         /**
          * Get the size of the window
          * @return {{ width: number, height: number }} - the size of the window
@@ -1071,8 +1089,8 @@ declare module "socket:window" {
     }
     export default ApplicationWindow;
     export const constants: typeof statuses;
-    import ipc from "ipc";
-    import * as statuses from "window/constants";
+    import ipc from "socket:ipc";
+    import * as statuses from "socket:window/constants";
 }
 declare module "socket:application" {
     /**
@@ -1266,9 +1284,9 @@ declare module "socket:application" {
         function close(): Promise<ipc.Result>;
     }
     export default exports;
-    import ApplicationWindow from "window";
-    import ipc from "ipc";
-    import * as exports from "application";
+    import ApplicationWindow from "socket:window";
+    import ipc from "socket:ipc";
+    import * as exports from "socket:application";
     
 }
 declare module "socket:events" {
@@ -1343,7 +1361,7 @@ declare module "socket:events" {
         export { once };
     }
     export function once(emitter: any, name: any): Promise<any>;
-    import * as exports from "events";
+    import * as exports from "socket:events";
     function listenerCount(type: any): any;
     
 }
@@ -1362,7 +1380,7 @@ declare module "socket:os" {
     export function availableMemory(): any;
     export const EOL: "\n" | "\r\n";
     export default exports;
-    import * as exports from "os";
+    import * as exports from "socket:os";
     
 }
 declare module "socket:process" {
@@ -1443,9 +1461,11 @@ declare module "socket:diagnostics/channels" {
         unsubscribe(onMessage: Function): boolean;
         /**
          * A no-op for `Channel` instances. This function always returns `false`.
-         * @return {boolean}
+         * @param {string} name
+         * @param {object} message
+         * @return Promise<boolean>
          */
-        publish(): boolean;
+        publish(name: string, message: object): Promise<boolean>;
         /**
          * Returns a string representation of the `ChannelRegistry`.
          * @ignore
@@ -1470,7 +1490,11 @@ declare module "socket:diagnostics/channels" {
      */
     export class ActiveChannel extends Channel {
         unsubscribe(onMessage: any): boolean;
-        publish(message: any): Promise<boolean>;
+        /**
+         * @param {object|any} message
+         * @return Promise<boolean>
+         */
+        publish(message: object | any): Promise<boolean>;
     }
     /**
      * A container for a grouping of channels that are named and owned
@@ -1520,14 +1544,6 @@ declare module "socket:diagnostics/channels" {
             name: string;
             channel: Channel;
         }>;
-        /**
-         * Publish a message to named subscribers in this group where `targets` is an
-         * object mapping channel names to messages.
-         * @param {string} name
-         * @param {object} message
-         * @return {boolean}
-         */
-        publish(name: string, message: object): boolean;
         /**
          * Iterator iterface.
          * @ignore
@@ -1638,7 +1654,7 @@ declare module "socket:diagnostics/window" {
         requestAnimationFrame(callback: any): any;
         sampleSize: any;
         sampleTick: number;
-        channel: import("diagnostics/channels").Channel;
+        channel: import("socket:diagnostics/channels").Channel;
         value: {
             rate: number;
             samples: number;
@@ -1657,12 +1673,12 @@ declare module "socket:diagnostics/window" {
     export class FetchMetric extends Metric {
         constructor(options: any);
         originalFetch: typeof fetch;
-        channel: import("diagnostics/channels").Channel;
+        channel: import("socket:diagnostics/channels").Channel;
         fetch(resource: any, options: any, extra: any): Promise<any>;
     }
     export class XMLHttpRequestMetric extends Metric {
         constructor(options: any);
-        channel: import("diagnostics/channels").Channel;
+        channel: import("socket:diagnostics/channels").Channel;
         patched: {
             open: {
                 (method: string, url: string | URL): void;
@@ -1677,7 +1693,7 @@ declare module "socket:diagnostics/window" {
          */
         static GlobalWorker: Worker;
         constructor(options: any);
-        channel: import("diagnostics/channels").Channel;
+        channel: import("socket:diagnostics/channels").Channel;
         Worker: {
             new (url: any, options: any, ...args: any[]): {};
         };
@@ -1687,7 +1703,7 @@ declare module "socket:diagnostics/window" {
         XMLHttpRequest: XMLHttpRequestMetric;
         Worker: WorkerMetric;
         fetch: FetchMetric;
-        channel: import("diagnostics/channels").ChannelGroup;
+        channel: import("socket:diagnostics/channels").ChannelGroup;
         subscribe(...args: any[]): boolean;
         unsubscribe(...args: any[]): boolean;
         start(which: any): void;
@@ -1697,26 +1713,26 @@ declare module "socket:diagnostics/window" {
         export { metrics };
     }
     export default _default;
-    import { Metric } from "diagnostics/metric";
-    import { Worker } from "worker";
+    import { Metric } from "socket:diagnostics/metric";
+    import { Worker } from "socket:worker";
 }
 declare module "socket:diagnostics/index" {
     /**
      * @param {string} name
      * @return {import('./channels.js').Channel}
      */
-    export function channel(name: string): import("diagnostics/channels").Channel;
+    export function channel(name: string): import("socket:diagnostics/channels").Channel;
     export default exports;
-    import * as exports from "diagnostics/index";
-    import channels from "diagnostics/channels";
-    import window from "diagnostics/window";
+    import * as exports from "socket:diagnostics/index";
+    import channels from "socket:diagnostics/channels";
+    import window from "socket:diagnostics/window";
     
     export { channels, window };
 }
 declare module "socket:diagnostics" {
-    export * from "diagnostics/index";
+    export * from "socket:diagnostics/index";
     export default exports;
-    import * as exports from "diagnostics";
+    import * as exports from "socket:diagnostics";
     
 }
 declare module "socket:bluetooth" {
@@ -1764,9 +1780,9 @@ declare module "socket:bluetooth" {
          */
         publish(id?: string, value?: string): Promise<void>;
     }
-    import * as exports from "bluetooth";
-    import { EventEmitter } from "events";
-    import ipc from "ipc";
+    import * as exports from "socket:bluetooth";
+    import { EventEmitter } from "socket:events";
+    import ipc from "socket:ipc";
     
 }
 declare module "socket:path/path" {
@@ -1836,10 +1852,17 @@ declare module "socket:path/path" {
         static normalize(options: object, path: PathComponent): string;
         /**
          * Formats `Path` object into a string.
+         * @param {object} options
          * @param {object|Path} path
          * @return {string}
          */
-        static format(options: any, path: object | Path): string;
+        static format(options: object, path: object | Path): string;
+        /**
+         * Parses input `path` into a `Path` instance.
+         * @param {PathComponent} path
+         * @return {object}
+         */
+        static parse(path: PathComponent): object;
         /**
          * Creates a `Path` instance from `input` and optional `cwd`.
          * @param {PathComponent} input
@@ -1997,15 +2020,15 @@ declare module "socket:path/win32" {
      * @return {string}
      */
     export function relative(from: string, to: string): string;
-    export { posix };
-    export * as _default from "path/win32";
-    export * as win32 from "path/win32";
+    export * as _default from "socket:path/win32";
+    export * as win32 from "socket:path/win32";
     export const sep: "\\";
     export const delimiter: ";";
-    export type PathComponent = import("path/path").PathComponent;
-    import posix from "path/posix";
-    import { Path } from "path/path";
+    export type PathComponent = import("socket:path/path").PathComponent;
+    import posix from "socket:path/posix";
+    import { Path } from "socket:path/path";
     
+    export { posix, Path };
 }
 declare module "socket:path/posix" {
     /**
@@ -2076,22 +2099,22 @@ declare module "socket:path/posix" {
      * @return {string}
      */
     export function relative(from: string, to: string): string;
-    export { win32 };
-    export * as _default from "path/posix";
-    export * as posix from "path/posix";
+    export * as _default from "socket:path/posix";
+    export * as posix from "socket:path/posix";
     export const sep: "/";
     export const delimiter: ":";
-    export type PathComponent = import("path/path").PathComponent;
-    import win32 from "path/win32";
-    import { Path } from "path/path";
+    export type PathComponent = import("socket:path/path").PathComponent;
+    import win32 from "socket:path/win32";
+    import { Path } from "socket:path/path";
     
+    export { win32, Path };
 }
 declare module "socket:path/index" {
-    export * as _default from "path/index";
+    export * as _default from "socket:path/index";
     
-    import posix from "path/posix";
-    import win32 from "path/win32";
-    import { Path } from "path/path";
+    import posix from "socket:path/posix";
+    import win32 from "socket:path/win32";
+    import { Path } from "socket:path/path";
     export { posix, win32, Path };
 }
 declare module "socket:path" {
@@ -2110,15 +2133,15 @@ declare module "socket:path" {
     export const relative: typeof posix.win32.relative;
     const _default: typeof posix | typeof posix.win32;
     export default _default;
-    import { posix } from "path/index";
-    import { Path } from "path/index";
-    import { win32 } from "path/index";
+    import { posix } from "socket:path/index";
+    import { Path } from "socket:path/index";
+    import { win32 } from "socket:path/index";
     export { Path, posix, win32 };
 }
 declare module "socket:fs" {
-    export * from "fs/index";
+    export * from "socket:fs/index";
     export default exports;
-    import * as exports from "fs";
+    import * as exports from "socket:fs";
     
 }
 declare module "socket:external/libsodium/index" {
@@ -2150,15 +2173,15 @@ declare module "socket:crypto" {
      */
     export function createDigest(algorithm: string, buf: any): Promise<Buffer>;
     /**
+     * WebCrypto API
+     * @see {https://developer.mozilla.org/en-US/docs/Web/API/Crypto}
+     */
+    export let webcrypto: any;
+    /**
      * A promise that resolves when all internals to be loaded/ready.
      * @type {Promise}
      */
     export const ready: Promise<any>;
-    /**
-     * WebCrypto API
-     * @see {https://developer.mozilla.org/en-US/docs/Web/API/Crypto}
-     */
-    export const webcrypto: any;
     /**
      * Maximum total size of random bytes per page
      */
@@ -2172,11 +2195,11 @@ declare module "socket:crypto" {
      */
     export const MAX_RANDOM_BYTES_PAGES: number;
     export default exports;
-    import { Buffer } from "buffer";
+    import { Buffer } from "socket:buffer";
     export namespace sodium {
         const ready: Promise<any>;
     }
-    import * as exports from "crypto";
+    import * as exports from "socket:crypto";
     
 }
 declare module "socket:stream" {
@@ -2332,12 +2355,15 @@ declare module "socket:stream" {
     }
     export class PassThrough extends exports.Transform {
     }
-    import * as exports from "stream";
-    import { EventEmitter } from "events";
+    import * as exports from "socket:stream";
+    import { EventEmitter } from "socket:events";
     
 }
 declare module "socket:fs/stream" {
     export const DEFAULT_STREAM_HIGH_WATER_MARK: number;
+    /**
+     * @typedef {import('./handle.js').FileHandle} FileHandle
+     */
     /**
      * A `Readable` stream for a `FileHandle`.
      */
@@ -2409,9 +2435,10 @@ declare module "socket:fs/stream" {
     export const FileReadStream: typeof exports.ReadStream;
     export const FileWriteStream: typeof exports.WriteStream;
     export default exports;
-    import { Readable } from "stream";
-    import { Writable } from "stream";
-    import * as exports from "fs/stream";
+    export type FileHandle = import("socket:fs/handle").FileHandle;
+    import { Readable } from "socket:stream";
+    import * as exports from "socket:fs/stream";
+    import { Writable } from "socket:stream";
     
 }
 declare module "socket:fs/constants" {
@@ -2484,13 +2511,13 @@ declare module "socket:fs/constants" {
     export const W_OK: any;
     export const X_OK: any;
     export default exports;
-    import * as exports from "fs/constants";
+    import * as exports from "socket:fs/constants";
     
 }
 declare module "socket:fs/flags" {
     export function normalizeFlags(flags: any): any;
     export default exports;
-    import * as exports from "fs/flags";
+    import * as exports from "socket:fs/flags";
     
 }
 declare module "socket:fs/stats" {
@@ -2534,7 +2561,7 @@ declare module "socket:fs/stats" {
         isSocket(): boolean;
     }
     export default exports;
-    import * as exports from "fs/stats";
+    import * as exports from "socket:fs/stats";
     
 }
 declare module "socket:fs/fds" {
@@ -2893,10 +2920,10 @@ declare module "socket:fs/handle" {
         [exports.kClosed]: boolean;
     }
     export default exports;
-    import { EventEmitter } from "events";
-    import { Buffer } from "buffer";
-    import { Stats } from "fs/stats";
-    import * as exports from "fs/handle";
+    import { EventEmitter } from "socket:events";
+    import { Buffer } from "socket:buffer";
+    import { Stats } from "socket:fs/stats";
+    import * as exports from "socket:fs/handle";
     
 }
 declare module "socket:fs/dir" {
@@ -3010,8 +3037,8 @@ declare module "socket:fs/dir" {
         [exports.kType]: number;
     }
     export default exports;
-    import { DirectoryHandle } from "fs/handle";
-    import * as exports from "fs/dir";
+    import { DirectoryHandle } from "socket:fs/handle";
+    import * as exports from "socket:fs/dir";
     
 }
 declare module "socket:fs/promises" {
@@ -3186,11 +3213,11 @@ declare module "socket:fs/promises" {
      * @return {Promise<void>}
      */
     export function writeFile(path: string | Buffer | URL | FileHandle, data: string | Buffer | any[] | DataView | TypedArray | Stream, options?: object | undefined): Promise<void>;
-    export * as constants from "fs/constants";
+    export * as constants from "socket:fs/constants";
     export default exports;
-    import { FileHandle } from "fs/handle";
-    import { Dir } from "fs/dir";
-    import * as exports from "fs/promises";
+    import { FileHandle } from "socket:fs/handle";
+    import { Dir } from "socket:fs/dir";
+    import * as exports from "socket:fs/promises";
     
 }
 declare module "socket:fs/binding" {
@@ -3400,19 +3427,19 @@ declare module "socket:fs/index" {
      */
     export function writeFile(path: string | Buffer | URL | number, data: string | Buffer | TypedArray | DataView | object, options?: object | undefined, callback: (arg0: err) => any): void;
     export function writev(fd: any, buffers: any, position: any, callback: any): void;
-    export { default as binding } from "./binding.js";
+    export { default as binding } from "socket:./binding.js";
     export default exports;
-    import * as constants from "fs/constants";
-    import { Dir } from "fs/dir";
-    import { DirectoryHandle } from "fs/handle";
-    import { Dirent } from "fs/dir";
-    import fds from "fs/fds";
-    import { FileHandle } from "fs/handle";
-    import * as promises from "fs/promises";
-    import { ReadStream } from "fs/stream";
-    import { Stats } from "fs/stats";
-    import { WriteStream } from "fs/stream";
-    import * as exports from "fs/index";
+    import * as constants from "socket:fs/constants";
+    import { Dir } from "socket:fs/dir";
+    import { DirectoryHandle } from "socket:fs/handle";
+    import { Dirent } from "socket:fs/dir";
+    import fds from "socket:fs/fds";
+    import { FileHandle } from "socket:fs/handle";
+    import * as promises from "socket:fs/promises";
+    import { ReadStream } from "socket:fs/stream";
+    import { Stats } from "socket:fs/stats";
+    import { WriteStream } from "socket:fs/stream";
+    import * as exports from "socket:fs/index";
     
     export { constants, Dir, DirectoryHandle, Dirent, fds, FileHandle, promises, ReadStream, Stats, WriteStream };
 }
@@ -3452,7 +3479,7 @@ declare module "socket:bootstrap" {
         download(url: string): Promise<Uint8Array>;
         cleanup(): void;
     }
-    import { EventEmitter } from "events";
+    import { EventEmitter } from "socket:events";
 }
 declare module "socket:net" {
     export default exports;
@@ -3503,9 +3530,9 @@ declare module "socket:net" {
     export function createServer(...args: any[]): exports.Server;
     export function getNetworkInterfaces(o: any): any;
     export function isIPv4(s: any): boolean;
-    import * as exports from "net";
-    import { EventEmitter } from "events";
-    import { Duplex } from "stream";
+    import * as exports from "socket:net";
+    import { EventEmitter } from "socket:events";
+    import { Duplex } from "socket:stream";
     const kLastWriteQueueSize: unique symbol;
     
 }
@@ -3520,7 +3547,7 @@ declare module "socket:dns/promises" {
      */
     export function lookup(hostname: string, opts?: any | undefined): Promise<any>;
     export default exports;
-    import * as exports from "dns/promises";
+    import * as exports from "socket:dns/promises";
     
 }
 declare module "socket:dns/index" {
@@ -3556,14 +3583,14 @@ declare module "socket:dns/index" {
     export function lookup(hostname: string, opts?: any | undefined, cb: Function): void;
     export { promises };
     export default exports;
-    import * as promises from "dns/promises";
-    import * as exports from "dns/index";
+    import * as promises from "socket:dns/promises";
+    import * as exports from "socket:dns/index";
     
 }
 declare module "socket:dns" {
-    export * from "dns/index";
+    export * from "socket:dns/index";
     export default exports;
-    import * as exports from "dns";
+    import * as exports from "socket:dns";
     
 }
 declare module "socket:dgram" {
@@ -3805,50 +3832,85 @@ declare module "socket:dgram" {
     }
     export default exports;
     export type SocketOptions = any;
-    import { EventEmitter } from "events";
-    import * as exports from "dgram";
-    import { InternalError } from "errors";
+    import { EventEmitter } from "socket:events";
+    import * as exports from "socket:dgram";
+    import { InternalError } from "socket:errors";
     
 }
 declare module "socket:hooks" {
-    const _default: {
-        didGlobalLoad: boolean;
-        didRuntimeInit: boolean;
+    /**
+     * An event dispatched when the runtime has been initialized.
+     */
+    export class InitEvent {
+        constructor();
+    }
+    /**
+     * An event dispatched when the runtime global has been loaded.
+     */
+    export class LoadEvent {
+        constructor();
+    }
+    /**
+     * An event dispatched when the runtime is considered ready.
+     */
+    export class ReadyEvent {
+        constructor();
+    }
+    /**
+     * An interface for registering callbacks for various hooks in
+     * the runtime.
+     */
+    export class Hooks extends EventTarget {
         /**
          * Reference to global object
          * @type {Global}
          */
-        readonly global: Global;
+        get global(): Global;
         /**
-         * Returns document for global
+         * Returns `document` in global.
          * @type {Document}
          */
-        readonly document: Document;
+        get document(): Document;
+        /**
+         * Returns `document` in global.
+         * @type {Window}
+         */
+        get window(): Window;
         /**
          * Predicate for determining if the global document is ready.
          * @type {boolean}
          */
-        readonly isDocumentReady: boolean;
+        get isDocumentReady(): boolean;
         /**
          * Predicate for determining if the global object is ready.
          * @type {boolean}
          */
-        readonly isGlobalReady: boolean;
+        get isGlobalReady(): boolean;
         /**
          * Predicate for determining if the runtime is ready.
          * @type {boolean}
          */
-        readonly isRuntimeReady: boolean;
+        get isRuntimeReady(): boolean;
         /**
          * Predicate for determining if everything is ready.
          * @type {boolean}
          */
-        readonly isReady: boolean;
+        get isReady(): boolean;
         /**
          * Predicate for determining if the runtime is working online.
          * @type {boolean}
          */
-        readonly isOnline: boolean;
+        get isOnline(): boolean;
+        /**
+         * Predicate for determining if the runtime is in a Worker context.
+         * @type {boolean}
+         */
+        get isWorkerContext(): boolean;
+        /**
+         * Predicate for determining if the runtime is in a Window context.
+         * @type {boolean}
+         */
+        get isWindowContext(): boolean;
         /**
          * Wait for the global Window, Document, and Runtime to be ready.
          * The callback function is called exactly once.
@@ -3872,6 +3934,7 @@ declare module "socket:hooks" {
         onInit(callback: Function): Function;
         /**
          * Calls callback when a global exception occurs.
+         * 'error', 'messageerror', and 'unhandledrejection' events are handled here.
          * @param {function} callback
          * @return {function}
          */
@@ -3902,10 +3965,9 @@ declare module "socket:hooks" {
          * @return {function}
          */
         onOffline(callback: Function): Function;
-        addEventListener(type: string, callback: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        dispatchEvent(event: Event): boolean;
-        removeEventListener(type: string, callback: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    };
+        #private;
+    }
+    const _default: Hooks;
     export default _default;
 }
 declare module "socket:test/fast-deep-equal" {
@@ -4117,9 +4179,9 @@ declare module "socket:test/index" {
     export type TestFn = (t: Test) => (void | Promise<void>);
 }
 declare module "socket:test" {
-    export * from "test/index";
+    export * from "socket:test/index";
     export default test;
-    import test from "test/index";
+    import test from "socket:test/index";
 }
 declare module "socket:module" {
     /**
@@ -4129,12 +4191,28 @@ declare module "socket:module" {
      */
     export function createRequire(sourceURL: URL | string): Function;
     export default exports;
-    export namespace builtins {
-        const _fs_promises: typeof fs.promises;
-        export { _fs_promises as fs/promises };
-        const _dns_promises: typeof dns.promises;
-        export { _dns_promises as dns/promises };
-    }
+    /**
+     * A limited set of builtins exposed to CommonJS modules.
+     */
+    export const builtins: {
+        buffer: typeof buffer;
+        console: import("socket:console").Console;
+        dgram: typeof dgram;
+        dns: typeof dns;
+        'dns/promises': typeof dns.promises;
+        events: typeof events;
+        fs: typeof fs;
+        'fs/promises': typeof fs.promises;
+        gc: any;
+        ipc: typeof ipc;
+        module: typeof exports;
+        os: typeof os;
+        path: typeof path;
+        process: any;
+        stream: typeof stream;
+        test: typeof test;
+        util: typeof util;
+    };
     /**
      * CommonJS module scope source wrapper.
      * @type {string}
@@ -4287,9 +4365,18 @@ declare module "socket:module" {
          */
         [Symbol.toStringTag](): string;
     }
-    import * as exports from "module";
-    import fs from "fs";
-    import dns from "dns";
+    import * as exports from "socket:module";
+    import buffer from "socket:buffer";
+    import dgram from "socket:dgram";
+    import dns from "socket:dns";
+    import events from "socket:events";
+    import fs from "socket:fs";
+    import ipc from "socket:ipc";
+    import os from "socket:os";
+    import { posix as path } from "socket:path";
+    import stream from "socket:stream";
+    import test from "socket:test";
+    import util from "socket:util";
     
 }
 declare module "socket:node-esm-loader" {
@@ -4303,6 +4390,7 @@ declare module "socket:stream-relay/encryption" {
         publicKey: any;
         privateKey: any;
         add(publicKey: any, privateKey: any): void;
+        get(to: any): any;
         has(to: any): boolean;
         /**
          * `Open(message, receiver)` performs a _decrypt-verify-decrypt_ (DVD) on a
@@ -4345,10 +4433,21 @@ declare module "socket:stream-relay/encryption" {
     }
 }
 declare module "socket:stream-relay/packets" {
+    export function trim(buf: Buffer): any;
+    /**
+     * The magic bytes prefixing every packet. They are the
+     * 2nd, 3rd, 5th, and 7th, prime numbers.
+     * @type {number[]}
+     */
+    export const MAGIC_BYTES_PREFIX: number[];
     /**
      * The version of the protocol.
      */
-    export const VERSION: 1;
+    export const VERSION: 2;
+    /**
+     * The size in bytes of the prefix magic bytes.
+     */
+    export const MAGIC_BYTES: 4;
     /**
      * The size in bytes of the `type` field.
      */
@@ -4430,10 +4529,21 @@ declare module "socket:stream-relay/packets" {
         static ttl: number;
         static maxLength: number;
         /**
+         * Returns an empty `Packet` instance.
+         * @return {Packet}
+         */
+        static empty(): Packet;
+        /**
          * @param {Packet|object} packet
          * @return {Packet}
          */
         static from(packet: Packet | object): Packet;
+        /**
+         * Determines if input is a packet.
+         * @param {Buffer|Uint8Array|number[]|object|Packet} packet
+         * @return {boolean}
+         */
+        static isPacket(packet: Buffer | Uint8Array | number[] | object | Packet): boolean;
         /**
          */
         static encode(p: any): Promise<Uint8Array>;
@@ -4470,13 +4580,15 @@ declare module "socket:stream-relay/packets" {
     }
     export class PacketIntro extends Packet {
         static type: number;
-        constructor({ message }: {
+        constructor({ clock, message }: {
+            clock: any;
             message: any;
         });
     }
     export class PacketJoin extends Packet {
         static type: number;
-        constructor({ message }: {
+        constructor({ clock, message }: {
+            clock: any;
             message: any;
         });
     }
@@ -4493,16 +4605,13 @@ declare module "socket:stream-relay/packets" {
             previousId: any;
         });
     }
-    export class PacketAsk extends Packet {
+    export class PacketSync extends Packet {
         static type: number;
         constructor({ packetId, clusterId, message }: {
             packetId: any;
             clusterId: any;
-            message?: {};
+            message?: string;
         });
-    }
-    export class PacketAnswer extends Packet {
-        static type: number;
     }
     export class PacketQuery extends Packet {
         static type: number;
@@ -4513,7 +4622,7 @@ declare module "socket:stream-relay/packets" {
         });
     }
     export default Packet;
-    import { Buffer } from "buffer";
+    import { Buffer } from "socket:buffer";
 }
 declare module "socket:stream-relay/cache" {
     /**
@@ -4528,6 +4637,7 @@ declare module "socket:stream-relay/cache" {
      * @return {number}
      */
     export function defaultSiblingResolver(a: CacheEntry, b: CacheEntry): number;
+    export function trim(buf: Buffer): any;
     /**
      * Default max size of a `Cache` instance.
      */
@@ -4545,6 +4655,21 @@ declare module "socket:stream-relay/cache" {
      * A class for storing a cache of packets by ID.
      */
     export class Cache {
+        static HASH_SIZE_BYTES: number;
+        /**
+         * encodeSummary provide a compact binary encoding of the output of summary()
+         *
+         * @param {Object} summary - the output of calling summary()
+         * @return {Buffer}
+        **/
+        static encodeSummary(summary: any): Buffer;
+        /**
+         * decodeSummary decodes the output of encodeSummary()
+         *
+         * @param {Buffer} bin - the output of calling encodeSummary()
+         * @return {Object} summary
+        **/
+        static decodeSummary(bin: Buffer): any;
         /**
          * `Cache` class constructor.
          * @param {CacheData?} [data]
@@ -4588,45 +4713,54 @@ declare module "socket:stream-relay/cache" {
          * @param {Packet} packet
          */
         compose(packet: Packet): Promise<Packet>;
+        sha1(value: any, toHex: any): Promise<any>;
         /**
-         * Visits each head entry in the cache calling function `fn` on each. Heads
-         * are entries that contain a previous packet ID that can be found in the
-         * cache.
-         * @param {function(CacheEntry, number): any} fn
+         * summarize returns a terse yet comparable summary of the cache contents.
+         *
+         * thinking of the cache as a trie of hex characters, the summary returns
+         * a checksum for the current level of the trie and for its 16 children.
+         *
+         * this is similar to a merkel tree as equal subtrees can easily be detected
+         * without the need for further recursion. When the subtree checksums are
+         * inequivalent then further negotiation at lower levels may be required, this
+         * process continues until the two trees become synchonized.
+         *
+         * when the prefix is empty, the summary will return an array of 16 checksums
+         * these checksums provide a way of comparing that subtree with other peers.
+         *
+         * when a variable-length hexidecimal prefix is provided, then only cache
+         * member hashes sharing this prefix will be considered.
+         *
+         * for each hex character provided in the prefix, the trie will decend by one
+         * level, each level divides the 2^128 address space by 16.
+         *
+         * example:
+         *
+         * level  0   1   2
+         * --------------------------
+         * 2b00
+         * aa0e  ━┓  ━┓
+         * aa1b   ┃   ┃
+         * aae3   ┃   ┃  ━┓
+         * aaea   ┃   ┃   ┃
+         * aaeb   ┃  ━┛  ━┛
+         * ab00   ┃  ━┓
+         * ab1e   ┃   ┃
+         * ab2a   ┃   ┃
+         * abef   ┃   ┃
+         * abf0  ━┛  ━┛
+         * bff9
+         *
+         * @param {string} prefix - a string of lowercased hexidecimal characters
+         * @return {Object}
          */
-        heads(fn: (arg0: CacheEntry, arg1: number) => any): void;
-        /**
-         * Visits each tail entry in the cache calling function `fn` on each. Tails
-         * are entries that contain a previous packet ID that is not found in the cache
-         * @param {function(CacheEntry, number): any} fn
-         */
-        tails(fn: (arg0: CacheEntry, arg1: number) => any): void;
-        /**
-         * Visits each entry in the cache calling function `fn` on each visited entry.
-         * @param {function(CacheEntry, number): any} fn
-         * @param {{ onlyHeads?: boolean?, packetId?: string, inclusive?: boolean }} [options]
-         */
-        each(fn: (arg0: CacheEntry, arg1: number) => any, options?: {
-            onlyHeads?: boolean | null;
-            packetId?: string;
-            inclusive?: boolean;
-        }): void;
-        /**
-         * Visits each entry in the cache calling function `fn` on each visited entry
-         * returning mapped results into a new array.
-         * @param {function(CacheEntry, number): any} fn
-         * @param {{ onlyHeads?: boolean?, packetId?: string, inclusive?: boolean }} [options]
-         */
-        map(fn: (arg0: CacheEntry, arg1: number) => any, options?: {
-            onlyHeads?: boolean | null;
-            packetId?: string;
-            inclusive?: boolean;
-        }): any[];
+        summarize(prefix?: string): any;
     }
     export default Cache;
     export type CacheEntry = Packet;
     export type CacheEntrySiblingResolver = (arg0: CacheEntry, arg1: CacheEntry) => number;
-    import { Packet } from "stream-relay/packets";
+    import { Buffer } from "socket:buffer";
+    import { Packet } from "socket:stream-relay/packets";
 }
 declare module "socket:stream-relay/scheme-ptp" {
     export function formatPeerId(forPubKey: any): any;
@@ -4695,19 +4829,20 @@ declare module "socket:stream-relay/scheme-ptp" {
         export { PTP };
     }
     export default _default;
-    import { Packet } from "stream-relay/packets";
+    import { Packet } from "socket:stream-relay/packets";
 }
 declare module "socket:stream-relay/index" {
     /**
      * Computes rate limit predicate value for a port and address pair for a given threshold
      * updating an input rates map.
      * @param {Map} rates
+     * @param {number} type
      * @param {number} port
      * @param {string} address
      * @param {number?} [threshold = DEFAULT_RATE_LIMIT_THRESHOLD]
      * @return {boolean}
      */
-    export function rateLimit(rates: Map<any, any>, port: number, address: string, threshold?: number | null): boolean;
+    export function rateLimit(rates: Map<any, any>, type: number, port: number, address: string, threshold?: number | null): boolean;
     /**
      * Retry delay in milliseconds for ping.
      * @type {number}
@@ -4733,7 +4868,7 @@ declare module "socket:stream-relay/index" {
      * @type {number}
      */
     export const DEFAULT_RATE_LIMIT_THRESHOLD: number;
-    export function createPortGenerator(localPort?: number | null, testPort?: number | null): (arg0: object | null, arg1: number | null) => number;
+    export function getRandomPort(ports: object, p: number | null): number;
     /**
      * A `RemotePeer` represents an initial, discovered, or connected remote peer.
      * Typically, you will not need to create instances of this class directly.
@@ -4780,11 +4915,12 @@ declare module "socket:stream-relay/index" {
         publicKey: any;
         privateKey: any;
         clock: number;
+        syncing: boolean;
         lastUpdate: number;
         lastRequest: number;
     }
     export function createPeer(options: {
-        createSocket: (arg0: 'udp4', arg1: object | null) => object;
+        createSocket: (arg0: 'udp4', arg1: null, arg2: object | null) => object;
     }): {
         new (persistedState?: object | null): {
             port: any;
@@ -4802,8 +4938,7 @@ declare module "socket:stream-relay/index" {
             unpublished: {};
             cache: any;
             queries: {};
-            joins: {};
-            connects: {};
+            controlPackets: {};
             uptime: number;
             maxHops: number;
             bdpCache: number[];
@@ -4817,31 +4952,31 @@ declare module "socket:stream-relay/index" {
             socket: any;
             testSocket: any;
             init(): Promise<any>;
+            connecting: number;
             send(data: any, ...args: any[]): Promise<boolean>;
             getState(): {
                 config: any;
                 data: any[];
                 unpublished: {};
             };
-            getPeers(packet: any, peers: any, n?: number): any;
+            getPeers(packet: any, peers: any, n?: number, filter?: (o: any) => any): any;
             mcast(packet: any, packetId: any, clusterId: any, isTaxed: any, ignorelist?: any[]): Promise<void>;
-            timer(delay: any, repeat: any, fn: any): boolean;
-            requestReflection(reflectionId: any): void;
-            ping(peer: any, withRetry: any, props?: {}): Promise<PacketPing>;
-            setPeer(packet: any, port: any, address: any): any;
+            timer(delay: any, repeat: any, fn: any): Promise<boolean>;
+            requestReflection(reflectionId: any): Promise<boolean>;
+            ping(peer: any, props?: {}): Promise<PacketPing>;
+            setPeer(peerId: any, packet: any, port: any, address: any): any;
             join(): Promise<void>;
-            publish(args: any): Promise<PacketPublish[]>;
-            negotiateCache(peer: any, packet: any, port: any, address: any): Promise<boolean[]>;
-            onAskPacket(packet: any, port: any, address: any): Promise<void>;
-            onAnswerPacket(packet: any, port: any, address: any): Promise<void>;
-            onQueryPacket(packet: any, port: any, address: any): Promise<void>;
+            publish(args: any): Promise<void | PacketPublish[]>;
+            sync(peer: any, packet: any, port: any, address: any): Promise<void>;
+            onSync(packet: any, port: any, address: any): Promise<void>;
+            onQuery(packet: any, port: any, address: any): Promise<void>;
             close(): void;
-            onConnection(peer: any, packet: any, port: any, address: any): void;
+            onConnection(peer: any, packet: any, port: any, address: any): Promise<void>;
             onPing(packet: any, port: any, address: any): Promise<void>;
             onPong(packet: any, port: any, address: any): Promise<void>;
             onIntro(packet: any, port: any, address: any): Promise<void>;
             onJoin(packet: any, port: any, address: any, data: any): Promise<void>;
-            onPub(packet: any, port: any, address: any, data: any): Promise<void>;
+            onPublish(packet: any, port: any, address: any, data: any): Promise<void>;
             rateLimit(data: any, port: any, address: any): boolean;
             /**
              * When a packet is received it is decoded, the packet contains the type
@@ -4854,7 +4989,7 @@ declare module "socket:stream-relay/index" {
             onMessage(data: Buffer | Uint8Array, { port, address }: {
                 port: number;
                 address: string;
-            }): Promise<void>;
+            }): any;
         };
         /**
          * Factory for creating a `Peer` instances. This function ensures all
@@ -4878,8 +5013,7 @@ declare module "socket:stream-relay/index" {
             unpublished: {};
             cache: any;
             queries: {};
-            joins: {};
-            connects: {};
+            controlPackets: {};
             uptime: number;
             maxHops: number;
             bdpCache: number[];
@@ -4893,31 +5027,31 @@ declare module "socket:stream-relay/index" {
             socket: any;
             testSocket: any;
             init(): Promise<any>;
+            connecting: number;
             send(data: any, ...args: any[]): Promise<boolean>;
             getState(): {
                 config: any;
                 data: any[];
                 unpublished: {};
             };
-            getPeers(packet: any, peers: any, n?: number): any;
+            getPeers(packet: any, peers: any, n?: number, filter?: (o: any) => any): any;
             mcast(packet: any, packetId: any, clusterId: any, isTaxed: any, ignorelist?: any[]): Promise<void>;
-            timer(delay: any, repeat: any, fn: any): boolean;
-            requestReflection(reflectionId: any): void;
-            ping(peer: any, withRetry: any, props?: {}): Promise<PacketPing>;
-            setPeer(packet: any, port: any, address: any): any;
+            timer(delay: any, repeat: any, fn: any): Promise<boolean>;
+            requestReflection(reflectionId: any): Promise<boolean>;
+            ping(peer: any, props?: {}): Promise<PacketPing>;
+            setPeer(peerId: any, packet: any, port: any, address: any): any;
             join(): Promise<void>;
-            publish(args: any): Promise<PacketPublish[]>;
-            negotiateCache(peer: any, packet: any, port: any, address: any): Promise<boolean[]>;
-            onAskPacket(packet: any, port: any, address: any): Promise<void>;
-            onAnswerPacket(packet: any, port: any, address: any): Promise<void>;
-            onQueryPacket(packet: any, port: any, address: any): Promise<void>;
+            publish(args: any): Promise<void | PacketPublish[]>;
+            sync(peer: any, packet: any, port: any, address: any): Promise<void>;
+            onSync(packet: any, port: any, address: any): Promise<void>;
+            onQuery(packet: any, port: any, address: any): Promise<void>;
             close(): void;
-            onConnection(peer: any, packet: any, port: any, address: any): void;
+            onConnection(peer: any, packet: any, port: any, address: any): Promise<void>;
             onPing(packet: any, port: any, address: any): Promise<void>;
             onPong(packet: any, port: any, address: any): Promise<void>;
             onIntro(packet: any, port: any, address: any): Promise<void>;
             onJoin(packet: any, port: any, address: any, data: any): Promise<void>;
-            onPub(packet: any, port: any, address: any, data: any): Promise<void>;
+            onPublish(packet: any, port: any, address: any, data: any): Promise<void>;
             rateLimit(data: any, port: any, address: any): boolean;
             /**
              * When a packet is received it is decoded, the packet contains the type
@@ -4930,16 +5064,16 @@ declare module "socket:stream-relay/index" {
             onMessage(data: Buffer | Uint8Array, { port, address }: {
                 port: number;
                 address: string;
-            }): Promise<void>;
+            }): any;
         }>;
     };
     export default createPeer;
-    import { sha256 } from "stream-relay/packets";
-    import { Cache } from "stream-relay/cache";
-    import { Encryption } from "stream-relay/encryption";
-    import { PacketPing } from "stream-relay/packets";
-    import { PacketPublish } from "stream-relay/packets";
-    import { Buffer } from "buffer";
+    import { sha256 } from "socket:stream-relay/packets";
+    import { Cache } from "socket:stream-relay/cache";
+    import { Encryption } from "socket:stream-relay/encryption";
+    import { PacketPing } from "socket:stream-relay/packets";
+    import { PacketPublish } from "socket:stream-relay/packets";
+    import { Buffer } from "socket:buffer";
     export { sha256, Cache, Encryption };
 }
 declare module "socket:peer" {
@@ -4970,7 +5104,7 @@ declare module "socket:peer" {
      *```
      *
      */
-    export class Peer {
+    export class Peer extends EventEmitter {
         /**
          * A method that will generate a public and private key pair.
          * The ed25519 pair can be stored by an app with a secure API.
@@ -5011,8 +5145,7 @@ declare module "socket:peer" {
             unpublished: {};
             cache: any;
             queries: {};
-            joins: {};
-            connects: {};
+            controlPackets: {};
             uptime: number;
             maxHops: number;
             bdpCache: number[];
@@ -5026,38 +5159,38 @@ declare module "socket:peer" {
             socket: any;
             testSocket: any;
             init(): Promise<any>;
+            connecting: number;
             send(data: any, ...args: any[]): Promise<boolean>;
             getState(): {
                 config: any;
                 data: any[];
                 unpublished: {};
             };
-            getPeers(packet: any, peers: any, n?: number): any;
+            getPeers(packet: any, peers: any, n?: number, filter?: (o: any) => any): any;
             mcast(packet: any, packetId: any, clusterId: any, isTaxed: any, ignorelist?: any[]): Promise<void>;
-            timer(delay: any, repeat: any, fn: any): boolean;
-            requestReflection(reflectionId: any): void;
-            ping(peer: any, withRetry: any, props?: {}): Promise<import("stream-relay/packets").PacketPing>;
-            setPeer(packet: any, port: any, address: any): any;
+            timer(delay: any, repeat: any, fn: any): Promise<boolean>;
+            requestReflection(reflectionId: any): Promise<boolean>;
+            ping(peer: any, props?: {}): Promise<import("socket:stream-relay/packets").PacketPing>;
+            setPeer(peerId: any, packet: any, port: any, address: any): any;
             join(): Promise<void>;
-            publish(args: any): Promise<import("stream-relay/packets").PacketPublish[]>;
-            negotiateCache(peer: any, packet: any, port: any, address: any): Promise<boolean[]>;
-            onAskPacket(packet: any, port: any, address: any): Promise<void>;
-            onAnswerPacket(packet: any, port: any, address: any): Promise<void>;
-            onQueryPacket(packet: any, port: any, address: any): Promise<void>;
+            publish(args: any): Promise<void | import("socket:stream-relay/packets").PacketPublish[]>;
+            sync(peer: any, packet: any, port: any, address: any): Promise<void>;
+            onSync(packet: any, port: any, address: any): Promise<void>;
+            onQuery(packet: any, port: any, address: any): Promise<void>;
             close(): void;
-            onConnection(peer: any, packet: any, port: any, address: any): void;
+            onConnection(peer: any, packet: any, port: any, address: any): Promise<void>;
             onPing(packet: any, port: any, address: any): Promise<void>;
             onPong(packet: any, port: any, address: any): Promise<void>;
             onIntro(packet: any, port: any, address: any): Promise<void>;
             onJoin(packet: any, port: any, address: any, data: any): Promise<void>;
-            onPub(packet: any, port: any, address: any, data: any): Promise<void>;
+            onPublish(packet: any, port: any, address: any, data: any): Promise<void>;
             rateLimit(data: any, port: any, address: any): boolean;
-            onMessage(data: Uint8Array | import("buffer").default, { port, address }: {
+            onMessage(data: Uint8Array | import("socket:buffer").default, { port, address }: {
                 port: number;
                 address: string;
-            }): Promise<void>;
+            }): any;
         };
-        _emit: any;
+        _emit: (type: any, ...args: any[]) => boolean;
         opts: {};
         /**
          * Emits a message to the network
@@ -5074,14 +5207,18 @@ declare module "socket:peer" {
          * @return {Peer} Returns an instance of the underlying network peer
          */
         join(): Peer;
+        getPeerId(): string;
+        close(): void;
+        #private;
     }
     export default Peer;
-    import { Encryption } from "stream-relay/index";
+    import { EventEmitter } from "socket:events";
+    import { Encryption } from "socket:stream-relay/index";
 }
 declare module "socket:stream-relay" {
-    export * from "stream-relay/index";
+    export * from "socket:stream-relay/index";
     export default def;
-    import def from "stream-relay/index";
+    import def from "socket:stream-relay/index";
 }
 declare module "socket:internal/globals" {
     /**
@@ -5161,7 +5298,7 @@ declare module "socket:test/harness" {
      * @param {new (options: object) => T} harnessClass
      * @returns {TapeTestFn<T>}
      */
-    export function wrapHarness<T extends exports.Harness>(tapzero: typeof import("test/index"), harnessClass: new (options: object) => T): exports.TapeTestFn<T>;
+    export function wrapHarness<T extends exports.Harness>(tapzero: typeof import("socket:test/index"), harnessClass: new (options: object) => T): exports.TapeTestFn<T>;
     export default exports;
     /**
      * @template {Harness} T
@@ -5171,9 +5308,9 @@ declare module "socket:test/harness" {
          * @param {import('./index.js')} tapzero
          * @param {new (options: object) => T} harnessClass
          */
-        constructor(tapzero: typeof import("test/index"), harnessClass: new (options: object) => T);
+        constructor(tapzero: typeof import("socket:test/index"), harnessClass: new (options: object) => T);
         /** @type {import('./index.js')} */
-        tapzero: typeof import("test/index");
+        tapzero: typeof import("socket:test/index");
         /** @type {new (options: object) => T} */
         harnessClass: new (options: object) => T;
         /**
@@ -5213,7 +5350,7 @@ declare module "socket:test/harness" {
          */
         _onAssert(assert: Test, options: object, fn: (harness: T, test: Test) => (void | Promise<void>)): Promise<void>;
     }
-    export type Test = import("test/index").Test;
+    export type Test = import("socket:test/index").Test;
     export type TestCase = (t: Test) => Promise<void> | void;
     export type Harness = {
         bootstrap(): Promise<void>;
@@ -5227,6 +5364,6 @@ declare module "socket:test/harness" {
         skip(name: string, cb?: (harness: T, test: Test) => (void | Promise<void>)): void;
         skip(name: string, opts: object, cb: (harness: T, test: Test) => (void | Promise<void>)): void;
     };
-    import * as exports from "test/harness";
+    import * as exports from "socket:test/harness";
     
 }

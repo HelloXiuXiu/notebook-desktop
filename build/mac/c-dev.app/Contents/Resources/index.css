@@ -61,6 +61,7 @@ main {
   width: 100%;
   height: calc(100% - 45px);
   background-color: #272521;
+  overflow: hidden;
 }
 main #split-main {
   position: relative;
@@ -100,6 +101,20 @@ main tonic-split > tonic-split-right {
   display: flex;
   overflow-y: auto !important;
   border-left: 1px solid black;
+}
+.tonic--split-handle {
+  transform: translateX(-50%);
+  cursor: ew-resize !important;
+  opacity: 0;
+}
+tonic-split[dragging] > .tonic--split-handle,
+tonic-split .tonic--split-handle:hover{
+  background: #38383A !important;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.35);
+  opacity: 1;
+  transition: unset !important;
+  transition: opacity 0.2s !important;
+  pointer-events: auto !important;
 }
 
 /* open note */
