@@ -11,7 +11,7 @@ The app is built with [Socket Runtime](https://socketsupply.co/guides/).
 
 <br>
 <br> 
-Run the app:
+Run the app:<br>
 
 ```sh
 ssc build -r
